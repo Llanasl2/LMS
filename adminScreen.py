@@ -9,12 +9,12 @@ class Ui_Administrator(object):
         conn = sqlite3.connect('lms-system.db')
         c = conn.cursor()
         usernameValue =  (self.dropboxStudents.currentText(),)
-        print(usernameValue) 
+        print(usernameValue)
         c.execute('SELECT * FROM studentGrades WHERE user=?', usernameValue)
         a = c.fetchone()
         conn.commit()
         conn.close()
-        
+
         students = grades( a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15], a[16])
 
         self.class1exam1Text.setText(students.class1exam1)
@@ -37,7 +37,7 @@ class Ui_Administrator(object):
     def allstudents(self):
         conn = sqlite3.connect('lms-system.db')
         c = conn.cursor()
-        c.execute('SELECT * FROM studentGrades WHERE type=student')
+        c.execute("SELECT * FROM studentGrades")
         a = c.fetchall()
         studentslist = list()
         for i in a:
@@ -47,8 +47,34 @@ class Ui_Administrator(object):
         return studentslist
 
     def searchStudent(self):
-        return 0
-    
+        conn = sqlite3.connect('lms-system.db')
+        c = conn.cursor()
+        usernameValue =  (self.searchBox.Text(),)
+        print(usernameValue)
+        c.execute('SELECT * FROM studentGrades WHERE user=?', usernameValue)
+        a = c.fetchone()
+        conn.commit()
+        conn.close()
+
+        students = grades( a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15], a[16])
+
+        self.class1exam1Text.setText(students.class1exam1)
+        self.class1exam2Text.setText(students.class1exam2)
+        self.class1finalText.setText(students.class1final)
+
+        self.class2exam1Text.setText(students.class2exam1)
+        self.class2exam2Text.setText(students.class2exam2)
+        self.class2finalText.setText(students.class2final)
+
+        self.class3exam1Text.setText(students.class3exam1)
+        self.class3exam2Text.setText(students.class3exam2)
+        self.class3finalText.setText(students.class3final)
+
+        self.class4exam1Text.setText(students.class4exam1)
+        self.class4exam2Text.setText(students.class4exam2)
+        self.class4finalText.setText(students.class4final)
+
+
     def setupUi(self, Administrator):
         Administrator.setObjectName("Administrator")
         Administrator.resize(551, 491)
@@ -59,10 +85,11 @@ class Ui_Administrator(object):
         self.dropboxStudents = QtWidgets.QComboBox(self.centralwidget)
         self.dropboxStudents.setGeometry(QtCore.QRect(30, 10, 229, 22))
         self.dropboxStudents.setObjectName("dropboxStudents")
+
         #items in dropbox
         items = self.allstudents()
         self.dropboxStudents.addItems(items)
-                
+
         self.gpaLabel = QtWidgets.QLabel(self.centralwidget)
         self.gpaLabel.setGeometry(QtCore.QRect(360, 390, 47, 14))
         self.gpaLabel.setObjectName("gpaLabel")
@@ -241,17 +268,18 @@ class Ui_Administrator(object):
         self.statusbar.setObjectName("statusbar")
         Administrator.setStatusBar(self.statusbar)
 
+        #Populate all the fields when loaded
         self.populateFields()
-        
+
         self.retranslateUi(Administrator)
         self.dropboxStudents.currentTextChanged.connect(self.populateFields)
         self.savegradesButton.clicked.connect(Administrator.close)
         self.okgradesButton.clicked.connect(Administrator.close)
         self.quitButton.clicked.connect(Administrator.close)
-        self.searchButton.clicked.connect(Administrator.close)
+        self.searchButton.clicked.connect(self.searchStudent)
         QtCore.QMetaObject.connectSlotsByName(Administrator)
 
-        
+
 
     def retranslateUi(self, Administrator):
         _translate = QtCore.QCoreApplication.translate
