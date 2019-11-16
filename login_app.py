@@ -4,10 +4,15 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
-
+from adminScreen import Ui_Administrator 
 
 class Ui_loginScreen(object):
-
+    def openWindow(self):
+        print("Opened")
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_Administrator()
+        self.ui.setupUi(self.window)
+        self.window.show()
     #Function to exit the application
     def quitApp(self):
         print("quit")
@@ -35,6 +40,8 @@ class Ui_loginScreen(object):
         if (queryValue[0] == self.passwordText.text()) and (queryValue[1] == userType):
             #Function if the login pass
             print("Access granted")
+            if (userType == 'admin'):
+                self.openWindow()
         else:
             #Function if the login fail
             print("Access denied")
