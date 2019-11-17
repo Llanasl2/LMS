@@ -12,6 +12,7 @@ class Ui_Administrator(object):
         print(usernameValue)
         c.execute('SELECT * FROM studentGrades WHERE user=?', usernameValue)
         a = c.fetchone()
+        print(a)
         conn.commit()
         conn.close()
 
@@ -46,19 +47,27 @@ class Ui_Administrator(object):
         conn.close()
         return studentslist
 
-    def searchStudent(self):
+    def searchStudents(self):
+        self.dropboxStudents.setCurrentIndex(self.dropboxStudents.findText(self.searchBox.text()))
+        """
         print(str(self.searchBox.text()))
+        studentName = self.searchBox.text()
         conn = sqlite3.connect('lms-system.db')
         c = conn.cursor()
-        c.execute("SELECT * FROM studentGrades")
+        c.execute("SELECT * FROM studentGrades WHERE user=?", (studentName,))
         a = c.fetchall()
         studentslist = list()
         for i in a:
-            if (i[0] == self.searchBox.Text()):
+            if (i[0] == self.searchBox.text()):
                 studentslist.append(i[0])
         conn.commit()
         conn.close()
-        return studentslist
+        #items in dropbox
+        print(studentslist)
+        self.dropboxStudents.clear()
+        self.dropboxStudents.addItems(studentslist)
+        self.dropboxStudents.update()
+        """
 
 
     def setupUi(self, Administrator):
@@ -71,10 +80,6 @@ class Ui_Administrator(object):
         self.dropboxStudents = QtWidgets.QComboBox(self.centralwidget)
         self.dropboxStudents.setGeometry(QtCore.QRect(30, 10, 229, 22))
         self.dropboxStudents.setObjectName("dropboxStudents")
-
-        #items in dropbox
-        items = self.allstudents()
-        self.dropboxStudents.addItems(items)
 
         self.gpaLabel = QtWidgets.QLabel(self.centralwidget)
         self.gpaLabel.setGeometry(QtCore.QRect(360, 390, 47, 14))
@@ -254,6 +259,10 @@ class Ui_Administrator(object):
         self.statusbar.setObjectName("statusbar")
         Administrator.setStatusBar(self.statusbar)
 
+        #items in dropbox
+        items = self.allstudents()
+        self.dropboxStudents.addItems(items)
+
         #Populate all the fields when loaded
         self.populateFields()
 
@@ -262,7 +271,7 @@ class Ui_Administrator(object):
         self.savegradesButton.clicked.connect(Administrator.close)
         self.okgradesButton.clicked.connect(Administrator.close)
         self.quitButton.clicked.connect(Administrator.close)
-        self.searchButton.clicked.connect(self.searchStudent)
+        self.searchButton.clicked.connect(self.searchStudents)
         QtCore.QMetaObject.connectSlotsByName(Administrator)
 
 
