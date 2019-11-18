@@ -13,6 +13,7 @@ class Ui_loginScreen(object):
         self.ui = Ui_Administrator()
         self.ui.setupUi(self.window)
         self.window.show()
+        loginScreen.setVisible(False)
     #Function to exit the application
     def quitApp(self):
         print("quit")
