@@ -34,6 +34,10 @@ class Ui_Administrator(object):
         self.class4exam2Text.setText(str(students.class4exam2.value()))
         self.class4finalText.setText(str(students.class4final.value()))
 
+        #GPA
+        GPA = "%.2f" % float(students.GPA())
+        self.gpaText.setText(GPA)
+
     #function go get all users for the dropbox
     def allstudents(self):
         conn = sqlite3.connect('lms-system.db')
