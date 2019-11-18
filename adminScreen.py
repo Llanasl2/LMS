@@ -17,19 +17,19 @@ class Ui_Administrator(object):
         conn.close()
 
         students = grades( a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15], a[16])
-
+        #Class1 data
         self.class1exam1Text.setText(students.class1exam1)
         self.class1exam2Text.setText(students.class1exam2)
         self.class1finalText.setText(students.class1final)
-
+        #Class2 data
         self.class2exam1Text.setText(students.class2exam1)
         self.class2exam2Text.setText(students.class2exam2)
         self.class2finalText.setText(students.class2final)
-
+        #Class3 data
         self.class3exam1Text.setText(students.class3exam1)
         self.class3exam2Text.setText(students.class3exam2)
         self.class3finalText.setText(students.class3final)
-
+        #Class4 data
         self.class4exam1Text.setText(students.class4exam1)
         self.class4exam2Text.setText(students.class4exam2)
         self.class4finalText.setText(students.class4final)
@@ -48,26 +48,38 @@ class Ui_Administrator(object):
         return studentslist
 
     def searchStudents(self):
-        self.dropboxStudents.setCurrentIndex(self.dropboxStudents.findText(self.searchBox.text()))
-        """
-        print(str(self.searchBox.text()))
-        studentName = self.searchBox.text()
+        self.dropboxStudents.setCurrentIndex(self.dropboxStudents.findText(str(self.searchBox.text()).lower()))
+        self.searchBox.clear()
+
+    def updateGrades(self):
+        #Function to update the grades as per Administrator
+        #The same function can be used for professors Screen.
         conn = sqlite3.connect('lms-system.db')
         c = conn.cursor()
-        c.execute("SELECT * FROM studentGrades WHERE user=?", (studentName,))
-        a = c.fetchall()
-        studentslist = list()
-        for i in a:
-            if (i[0] == self.searchBox.text()):
-                studentslist.append(i[0])
+
+        st = self.dropboxStudents.currentText()
+        #Class1 data
+        c1e1 = self.class1exam1Text.text()
+        c1e2 = self.class1exam2Text.text()
+        c1f = self.class1finalText.text()
+        #Class2 data
+        c2e1 = self.class2exam1Text.text()
+        c2e2 = self.class2exam2Text.text()
+        c2f = self.class2finalText.text()
+        #Class3 data
+        c3e1 = self.class3exam1Text.text()
+        c3e2 = self.class3exam2Text.text()
+        c3f = self.class3finalText.text()
+        #Class4 data
+        c4e1 = self.class4exam1Text.text()
+        c4e2 = self.class4exam2Text.text()
+        c4f = self.class4finalText.text()
+        print(c1e1, c1e2, c1f, c2e1, c2e2, c2f, c3e1, c3e2, c3f, c4e1, c4e2, c4f, st)
+        c.execute("UPDATE studentGrades SET c1e1=?, c1e2=?, c1f=?, c2e1=?, c2e2=?, c2f=?, c3e1=?, c3e2=?, c3f=?, c4e1=?, c4e2=?, c4f=? WHERE user=?", (c1e1, c1e2, c1f, c2e1, c2e2, c2f, c3e1, c3e2, c3f, c4e1, c4e2, c4f, st,))
+
         conn.commit()
         conn.close()
-        #items in dropbox
-        print(studentslist)
-        self.dropboxStudents.clear()
-        self.dropboxStudents.addItems(studentslist)
-        self.dropboxStudents.update()
-        """
+
 
 
     def setupUi(self, Administrator):
@@ -268,7 +280,7 @@ class Ui_Administrator(object):
 
         self.retranslateUi(Administrator)
         self.dropboxStudents.currentTextChanged.connect(self.populateFields)
-        self.savegradesButton.clicked.connect(Administrator.close)
+        self.savegradesButton.clicked.connect(self.updateGrades)
         self.okgradesButton.clicked.connect(Administrator.close)
         self.quitButton.clicked.connect(Administrator.close)
         self.searchButton.clicked.connect(self.searchStudents)
