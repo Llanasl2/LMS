@@ -18,21 +18,21 @@ class Ui_Administrator(object):
 
         students = grades( a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15], a[16])
         #Class1 data
-        self.class1exam1Text.setText(students.class1exam1)
-        self.class1exam2Text.setText(students.class1exam2)
-        self.class1finalText.setText(students.class1final)
+        self.class1exam1Text.setText(str(students.class1exam1.value()))
+        self.class1exam2Text.setText(str(students.class1exam2.value()))
+        self.class1finalText.setText(str(students.class1final.value()))
         #Class2 data
-        self.class2exam1Text.setText(students.class2exam1)
-        self.class2exam2Text.setText(students.class2exam2)
-        self.class2finalText.setText(students.class2final)
+        self.class2exam1Text.setText(str(students.class2exam1.value()))
+        self.class2exam2Text.setText(str(students.class2exam2.value()))
+        self.class2finalText.setText(str(students.class2final.value()))
         #Class3 data
-        self.class3exam1Text.setText(students.class3exam1)
-        self.class3exam2Text.setText(students.class3exam2)
-        self.class3finalText.setText(students.class3final)
+        self.class3exam2Text.setText(str(students.class3exam2.value()))
+        self.class3exam1Text.setText(str(students.class3exam1.value()))
+        self.class3finalText.setText(str(students.class3final.value()))
         #Class4 data
-        self.class4exam1Text.setText(students.class4exam1)
-        self.class4exam2Text.setText(students.class4exam2)
-        self.class4finalText.setText(students.class4final)
+        self.class4exam1Text.setText(str(students.class4exam1.value()))
+        self.class4exam2Text.setText(str(students.class4exam2.value()))
+        self.class4finalText.setText(str(students.class4final.value()))
 
     #function go get all users for the dropbox
     def allstudents(self):
