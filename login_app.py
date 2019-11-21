@@ -5,15 +5,28 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
 from adminScreen import Ui_Administrator 
+from studentScreen import Ui_Student
 
 class Ui_loginScreen(object):
-    def openWindow(self):
+    #Function to open Admin window
+    def openAdminWindow(self):
         print("Opened")
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_Administrator()
         self.ui.setupUi(self.window)
         self.window.show()
         loginScreen.setVisible(False)
+
+    #Function to open student window
+    def openStudentWindow(self, usernameValue):
+        print("Opened")
+        Ui_Student.usernameValue = usernameValue
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_Student()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        loginScreen.setVisible(False)
+
     #Function to exit the application
     def quitApp(self):
         print("quit")
@@ -41,8 +54,12 @@ class Ui_loginScreen(object):
         if (queryValue[0] == self.passwordText.text()) and (queryValue[1] == userType):
             #Function if the login pass
             print("Access granted")
+
             if (userType == 'admin'):
-                self.openWindow()
+                self.openAdminWindow()
+            elif(userType == 'student'):
+                self.openStudentWindow(usernameValue)      
+
         else:
             #Function if the login fail
             print("Access denied")
