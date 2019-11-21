@@ -8,9 +8,22 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import sqlite3
 
 class Ui_Professor(object):
+
+    def allstudents(self):
+        conn = sqlite3.connect('lms-system.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM studentGrades")
+        a = c.fetchall()
+        studentslist = list()
+        for i in a:
+            studentslist.append(i[0])
+        conn.commit()
+        conn.close()
+        return studentslist
+
     def setupUi(self, Professor):
         Professor.setObjectName("Professor")
         Professor.resize(551, 491)
@@ -200,6 +213,23 @@ class Ui_Professor(object):
         self.okgradesButton.clicked.connect(Professor.close)
         self.quitButton.clicked.connect(Professor.close)
         QtCore.QMetaObject.connectSlotsByName(Professor)
+
+        self.class1exam1Text.setEnabled(False)
+        self.class1exam2Text.setEnabled(False)
+        self.class1finalText.setEnabled(False)
+        self.class2exam1Text.setEnabled(False)
+        self.class2exam2Text.setEnabled(False)
+        self.class2finalText.setEnabled(False)
+        self.class3exam1Text.setEnabled(False)
+        self.class3exam2Text.setEnabled(False)
+        self.class3finalText.setEnabled(False)
+
+
+        items = self.allstudents()
+        self.dropboxStudents.addItems(items)
+
+        if self.dropboxCourse.currentText() == Clas1:
+            self.class1exam1Text.setEnabled(True)
 
     def retranslateUi(self, Professor):
         _translate = QtCore.QCoreApplication.translate
