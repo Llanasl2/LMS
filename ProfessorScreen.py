@@ -1,14 +1,6 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'ProfessorScreen.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.2
-#
-# WARNING! All changes made in this file will be lost!
-
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
+from classes import *
 
 class Ui_Professor(object):
 
@@ -24,6 +16,218 @@ class Ui_Professor(object):
         conn.close()
         return studentslist
 
+    def chooseClass(self):
+
+        if self.dropboxCourse.currentText() == "Select a Class":
+            self.class1exam1Text.setEnabled(False)
+            self.class1exam2Text.setEnabled(False)
+            self.class1finalText.setEnabled(False)
+            self.class2exam1Text.setEnabled(False)
+            self.class2exam2Text.setEnabled(False)
+            self.class2finalText.setEnabled(False)
+            self.class3exam1Text.setEnabled(False)
+            self.class3exam2Text.setEnabled(False)
+            self.class3finalText.setEnabled(False)
+            self.class4exam1Text.setEnabled(False)
+            self.class4exam2Text.setEnabled(False)
+            self.class4finalText.setEnabled(False)
+
+        if self.dropboxCourse.currentText() == "Class1":
+            self.class1exam1Text.setEnabled(True)
+            self.class1exam2Text.setEnabled(True)
+            self.class1finalText.setEnabled(True)
+            self.class2exam1Text.setEnabled(False)
+            self.class2exam2Text.setEnabled(False)
+            self.class2finalText.setEnabled(False)
+            self.class3exam1Text.setEnabled(False)
+            self.class3exam2Text.setEnabled(False)
+            self.class3finalText.setEnabled(False)
+            self.class4exam1Text.setEnabled(False)
+            self.class4exam2Text.setEnabled(False)
+            self.class4finalText.setEnabled(False)
+
+        if self.dropboxCourse.currentText() == "Class2":
+            self.class1exam1Text.setEnabled(False)
+            self.class1exam2Text.setEnabled(False)
+            self.class1finalText.setEnabled(False)
+            self.class2exam1Text.setEnabled(True)
+            self.class2exam2Text.setEnabled(True)
+            self.class2finalText.setEnabled(True)
+            self.class3exam1Text.setEnabled(False)
+            self.class3exam2Text.setEnabled(False)
+            self.class3finalText.setEnabled(False)
+            self.class4exam1Text.setEnabled(False)
+            self.class4exam2Text.setEnabled(False)
+            self.class4finalText.setEnabled(False)
+
+        if self.dropboxCourse.currentText() == "Class3":
+            self.class1exam1Text.setEnabled(False)
+            self.class1exam2Text.setEnabled(False)
+            self.class1finalText.setEnabled(False)
+            self.class2exam1Text.setEnabled(False)
+            self.class2exam2Text.setEnabled(False)
+            self.class2finalText.setEnabled(False)
+            self.class3exam1Text.setEnabled(True)
+            self.class3exam2Text.setEnabled(True)
+            self.class3finalText.setEnabled(True)
+            self.class4exam1Text.setEnabled(False)
+            self.class4exam2Text.setEnabled(False)
+            self.class4finalText.setEnabled(False)
+
+        if self.dropboxCourse.currentText() == "Class4":
+            self.class1exam1Text.setEnabled(False)
+            self.class1exam2Text.setEnabled(False)
+            self.class1finalText.setEnabled(False)
+            self.class2exam1Text.setEnabled(False)
+            self.class2exam2Text.setEnabled(False)
+            self.class2finalText.setEnabled(False)
+            self.class3exam1Text.setEnabled(False)
+            self.class3exam2Text.setEnabled(False)
+            self.class3finalText.setEnabled(False)
+            self.class4exam1Text.setEnabled(True)
+            self.class4exam2Text.setEnabled(True)
+            self.class4finalText.setEnabled(True)
+
+    def populateFields(self):
+        conn = sqlite3.connect('lms-system.db')
+        c = conn.cursor()
+        usernameValue =  (self.dropboxStudents.currentText(),)
+        print(usernameValue)
+        c.execute('SELECT * FROM studentGrades WHERE user=?', usernameValue)
+        a = c.fetchone()
+        print(a)
+        conn.commit()
+        conn.close()
+
+        students = grades( a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15], a[16])
+        print(students)
+        if self.dropboxCourse.currentText() == "Select a Class":
+            #Class1 data
+            self.class1exam1Text.setText(str("-"))
+            self.class1exam2Text.setText(str("-"))
+            self.class1finalText.setText(str("-"))
+            #Class2 data
+            self.class2exam1Text.setText(str("-"))
+            self.class2exam2Text.setText(str("-"))
+            self.class2finalText.setText(str("-"))
+            #Class3 data
+            self.class3exam2Text.setText(str("-"))
+            self.class3exam1Text.setText(str("-"))
+            self.class3finalText.setText(str("-"))
+            #Class4 data
+            self.class4exam1Text.setText(str("-"))
+            self.class4exam2Text.setText(str("-"))
+            self.class4finalText.setText(str("-"))
+
+        if self.dropboxCourse.currentText() == "Class1":
+            #Class1 data
+            self.class1exam1Text.setText(str(students.class1exam1.value()))
+            self.class1exam2Text.setText(str(students.class1exam2.value()))
+            self.class1finalText.setText(str(students.class1final.value()))
+            #Class2 data
+            self.class2exam1Text.setText(str("-"))
+            self.class2exam2Text.setText(str("-"))
+            self.class2finalText.setText(str("-"))
+            #Class3 data
+            self.class3exam2Text.setText(str("-"))
+            self.class3exam1Text.setText(str("-"))
+            self.class3finalText.setText(str("-"))
+            #Class4 data
+            self.class4exam1Text.setText(str("-"))
+            self.class4exam2Text.setText(str("-"))
+            self.class4finalText.setText(str("-"))
+
+        if self.dropboxCourse.currentText() == "Class2":
+            #Class1 data
+            self.class1exam1Text.setText(str("-"))
+            self.class1exam2Text.setText(str("-"))
+            self.class1finalText.setText(str("-"))
+            #Class2 data
+            self.class2exam1Text.setText(str(students.class2exam1.value()))
+            self.class2exam2Text.setText(str(students.class2exam2.value()))
+            self.class2finalText.setText(str(students.class2final.value()))
+            #Class3 data
+            self.class3exam2Text.setText(str("-"))
+            self.class3exam1Text.setText(str("-"))
+            self.class3finalText.setText(str("-"))
+            #Class4 data
+            self.class4exam1Text.setText(str("-"))
+            self.class4exam2Text.setText(str("-"))
+            self.class4finalText.setText(str("-"))
+
+        if self.dropboxCourse.currentText() == "Class3":
+            #Class1 data
+            self.class1exam1Text.setText(str("-"))
+            self.class1exam2Text.setText(str("-"))
+            self.class1finalText.setText(str("-"))
+            #Class2 data
+            self.class2exam1Text.setText(str("-"))
+            self.class2exam2Text.setText(str("-"))
+            self.class2finalText.setText(str("-"))
+            #Class3 data
+            self.class3exam2Text.setText(str(students.class3exam2.value()))
+            self.class3exam1Text.setText(str(students.class3exam1.value()))
+            self.class3finalText.setText(str(students.class3final.value()))
+            #Class4 data
+            self.class4exam1Text.setText(str("-"))
+            self.class4exam2Text.setText(str("-"))
+            self.class4finalText.setText(str("-"))
+
+        if self.dropboxCourse.currentText() == "Class4":
+            #Class1 data
+            self.class1exam1Text.setText(str("-"))
+            self.class1exam2Text.setText(str("-"))
+            self.class1finalText.setText(str("-"))
+            #Class2 data
+            self.class2exam1Text.setText(str("-"))
+            self.class2exam2Text.setText(str("-"))
+            self.class2finalText.setText(str("-"))
+            #Class3 data
+            self.class3exam2Text.setText(str("-"))
+            self.class3exam1Text.setText(str("-"))
+            self.class3finalText.setText(str("-"))
+            #Class4 data
+            self.class4exam1Text.setText(str(students.class4exam1.value()))
+            self.class4exam2Text.setText(str(students.class4exam2.value()))
+            self.class4finalText.setText(str(students.class4final.value()))
+
+    def updateGrades(self):
+        #Function to update the grades as per Administrator
+        #The same function can be used for professors Screen.
+        conn = sqlite3.connect('lms-system.db')
+        c = conn.cursor()
+
+        st = self.dropboxStudents.currentText()
+        #Class1 data
+        c1e1 = self.class1exam1Text.text()
+        c1e2 = self.class1exam2Text.text()
+        c1f = self.class1finalText.text()
+        #Class2 data
+        c2e1 = self.class2exam1Text.text()
+        c2e2 = self.class2exam2Text.text()
+        c2f = self.class2finalText.text()
+        #Class3 data
+        c3e1 = self.class3exam1Text.text()
+        c3e2 = self.class3exam2Text.text()
+        c3f = self.class3finalText.text()
+        #Class4 data
+        c4e1 = self.class4exam1Text.text()
+        c4e2 = self.class4exam2Text.text()
+        c4f = self.class4finalText.text()
+        print(c1e1, c1e2, c1f, c2e1, c2e2, c2f, c3e1, c3e2, c3f, c4e1, c4e2, c4f, st)
+
+        if self.dropboxCourse.currentText() == "Class1":
+            c.execute("UPDATE studentGrades SET c1e1=?, c1e2=?, c1f=? WHERE user=?", (c1e1, c1e2, c1f, st,))
+        if self.dropboxCourse.currentText() == "Class2":
+            c.execute("UPDATE studentGrades SET c2e1=?, c2e2=?, c2f=? WHERE user=?", (c2e1, c2e2, c2f, st,))
+        if self.dropboxCourse.currentText() == "Class3":
+            c.execute("UPDATE studentGrades SET c3e1=?, c3e2=?, c3f=? WHERE user=?", (c3e1, c3e2, c3f, st,))
+        if self.dropboxCourse.currentText() == "Class4":
+            c.execute("UPDATE studentGrades SET c4e1=?, c4e2=?, c4f=? WHERE user=?", (c4e1, c4e2, c4f, st,))
+
+        conn.commit()
+        conn.close()
+
     def setupUi(self, Professor):
         Professor.setObjectName("Professor")
         Professor.resize(551, 491)
@@ -35,7 +239,7 @@ class Ui_Professor(object):
         self.dropboxCourse.setGeometry(QtCore.QRect(30, 40, 229, 22))
         self.dropboxCourse.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         self.dropboxCourse.setObjectName("dropboxCourse")
-        courses = ["Class1","Class2","Class3","Class4"]
+        courses = ["Select a Class","Class1","Class2","Class3","Class4"]
         self.dropboxCourse.addItems(courses)
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.layoutWidget.setGeometry(QtCore.QRect(280, 90, 231, 151))
@@ -209,7 +413,7 @@ class Ui_Professor(object):
         Professor.setStatusBar(self.statusbar)
 
         self.retranslateUi(Professor)
-        self.savegradesButton.clicked.connect(Professor.close)
+        self.savegradesButton.clicked.connect(self.updateGrades)
         self.okgradesButton.clicked.connect(Professor.close)
         self.quitButton.clicked.connect(Professor.close)
         QtCore.QMetaObject.connectSlotsByName(Professor)
@@ -230,24 +434,8 @@ class Ui_Professor(object):
         items = self.allstudents()
         self.dropboxStudents.addItems(items)
 
-        if self.dropboxCourse.currentText() == "Class1":
-            self.class1exam1Text.setEnabled(True)
-            self.class1exam2Text.setEnabled(True)
-            self.class1finalText.setEnabled(True)
-        if self.dropboxCourse.currentText() == "Class2":
-            self.class2exam1Text.setEnabled(True)
-            self.class2exam2Text.setEnabled(True)
-            self.class2finalText.setEnabled(True)
-        if self.dropboxCourse.currentText() == "Class3":
-            self.class3exam1Text.setEnabled(True)
-            self.class3exam2Text.setEnabled(True)
-            self.class3finalText.setEnabled(True)
-        if self.dropboxCourse.currentText() == "Class4":
-            self.class4exam1Text.setEnabled(True)
-            self.class4exam2Text.setEnabled(True)
-            self.class4finalText.setEnabled(True)
-
-
+        self.dropboxCourse.currentTextChanged.connect(self.chooseClass)
+        self.dropboxStudents.currentTextChanged.connect(self.populateFields)
 
     def retranslateUi(self, Professor):
         _translate = QtCore.QCoreApplication.translate
