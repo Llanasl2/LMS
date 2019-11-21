@@ -223,13 +223,31 @@ class Ui_Professor(object):
         self.class3exam1Text.setEnabled(False)
         self.class3exam2Text.setEnabled(False)
         self.class3finalText.setEnabled(False)
-
+        self.class4exam1Text.setEnabled(False)
+        self.class4exam2Text.setEnabled(False)
+        self.class4finalText.setEnabled(False)
 
         items = self.allstudents()
         self.dropboxStudents.addItems(items)
 
-        if self.dropboxCourse.currentText() == Clas1:
+        if self.dropboxCourse.currentText() == "Class1":
             self.class1exam1Text.setEnabled(True)
+            self.class1exam2Text.setEnabled(True)
+            self.class1finalText.setEnabled(True)
+        if self.dropboxCourse.currentText() == "Class2":
+            self.class2exam1Text.setEnabled(True)
+            self.class2exam2Text.setEnabled(True)
+            self.class2finalText.setEnabled(True)
+        if self.dropboxCourse.currentText() == "Class3":
+            self.class3exam1Text.setEnabled(True)
+            self.class3exam2Text.setEnabled(True)
+            self.class3finalText.setEnabled(True)
+        if self.dropboxCourse.currentText() == "Class4":
+            self.class4exam1Text.setEnabled(True)
+            self.class4exam2Text.setEnabled(True)
+            self.class4finalText.setEnabled(True)
+
+
 
     def retranslateUi(self, Professor):
         _translate = QtCore.QCoreApplication.translate
