@@ -18,6 +18,22 @@ class Ui_Professor(object):
 
     def chooseClass(self):
 
+        self.class1exam1Text.setText(str("-"))
+        self.class1exam2Text.setText(str("-"))
+        self.class1finalText.setText(str("-"))
+        #Class2 data
+        self.class2exam1Text.setText(str("-"))
+        self.class2exam2Text.setText(str("-"))
+        self.class2finalText.setText(str("-"))
+        #Class3 data
+        self.class3exam2Text.setText(str("-"))
+        self.class3exam1Text.setText(str("-"))
+        self.class3finalText.setText(str("-"))
+        #Class4 data
+        self.class4exam1Text.setText(str("-"))
+        self.class4exam2Text.setText(str("-"))
+        self.class4finalText.setText(str("-"))
+
         if self.dropboxCourse.currentText() == "Select a Class":
             self.class1exam1Text.setEnabled(False)
             self.class1exam2Text.setEnabled(False)
@@ -101,6 +117,9 @@ class Ui_Professor(object):
 
         students = grades( a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15], a[16])
         print(students)
+
+
+
         if self.dropboxCourse.currentText() == "Select a Class":
             #Class1 data
             self.class1exam1Text.setText(str("-"))
