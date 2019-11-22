@@ -104,6 +104,8 @@ class Ui_Professor(object):
             self.class4exam2Text.setEnabled(True)
             self.class4finalText.setEnabled(True)
 
+        self.populateFields()
+
     def populateFields(self):
         conn = sqlite3.connect('lms-system.db')
         c = conn.cursor()
