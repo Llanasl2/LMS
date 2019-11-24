@@ -77,6 +77,9 @@ class Ui_includeExam(object):
         answerC = self.answerC.text()
         answerD = self.answerD.text()
 
+        if (question=="" or answerA=="" or answerb=="" or answerC=="" or answerD==""):
+            return win32api.MessageBox(0, 'Please type a complete question', 'Missing Information')
+
         conn = sqlite3.connect('lms-system.db')
         c = conn.cursor()
         print(classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, "-update")
@@ -89,7 +92,13 @@ class Ui_includeExam(object):
         conn.commit()
         conn.close()
 
-
+    def newQuestion(self):
+        self.questBox.setCurrentIndex(0)
+        self.questionTextbox.setText("")
+        self.answerA.setText("")
+        self.answerB.setText("")
+        self.answerC.setText("")
+        self.answerD.setText("")
 
     def setupUi(self, includeExam):
         includeExam.setObjectName("includeExam")
@@ -143,7 +152,7 @@ class Ui_includeExam(object):
         self.answerD.setGeometry(QtCore.QRect(40, 250, 201, 21))
         self.answerD.setObjectName("answerD")
         self.questBox = QtWidgets.QComboBox(includeExam)
-        self.questBox.setGeometry(QtCore.QRect(70, 60, 171, 22))
+        self.questBox.setGeometry(QtCore.QRect(90, 60, 151, 22))
         self.questBox.setObjectName("questBox")
         quest = ["","Question1","Question2","Question3","Question4","Question5"]
         self.questBox.addItems(quest)
@@ -159,6 +168,10 @@ class Ui_includeExam(object):
         self.saveButton = QtWidgets.QPushButton(includeExam)
         self.saveButton.setGeometry(QtCore.QRect(170, 280, 80, 22))
         self.saveButton.setObjectName("saveButton")
+        self.correctanswerTextbox = QtWidgets.QLineEdit(includeExam)
+        self.correctanswerTextbox.setGeometry(QtCore.QRect(100, 310, 60, 22))
+        self.correctanswerTextbox.setObjectName("correctanswerTextbox")
+        self.correctanswerTextbox.setPlaceholderText("Answer")
         self.newButton = QtWidgets.QPushButton(includeExam)
         self.newButton.setGeometry(QtCore.QRect(10, 310, 80, 22))
         self.newButton.setObjectName("newButton")
@@ -167,7 +180,7 @@ class Ui_includeExam(object):
         self.addButton.clicked.connect(self.addQuestion)
         self.updateButton.clicked.connect(self.readQuestion)
         self.saveButton.clicked.connect(self.updateQuestion)
-        self.newButton.clicked.connect(self.newButton.close)
+        self.newButton.clicked.connect(self.newQuestion)
         self.quitButton.clicked.connect(includeExam.close)
         QtCore.QMetaObject.connectSlotsByName(includeExam)
 
