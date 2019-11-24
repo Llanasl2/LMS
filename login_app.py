@@ -7,6 +7,7 @@ import sqlite3
 from adminScreen import Ui_Administrator 
 from studentScreen import Ui_Student
 from professorMenu import Ui_professorMenu
+
 class Ui_loginScreen(object):
     #Function to open Admin window
     def openAdminWindow(self):
@@ -26,6 +27,7 @@ class Ui_loginScreen(object):
         self.ui.setupUi(self.window)
         self.window.show()
         loginScreen.setVisible(False)
+    #Function to open Professor Menu
     def openProfessorWindow(self):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_professorMenu()
