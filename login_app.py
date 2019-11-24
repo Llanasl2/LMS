@@ -58,8 +58,8 @@ class Ui_loginScreen(object):
             if (userType == 'admin'):
                 self.openAdminWindow()
             elif(userType == 'student'):
-                self.openStudentWindow(usernameValue)      
-
+                self.openStudentWindow(usernameValue)
+                   
         else:
             #Function if the login fail
             print("Access denied")
