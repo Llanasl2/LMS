@@ -6,7 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
 from adminScreen import Ui_Administrator 
 from studentScreen import Ui_Student
-
+from professorMenu import Ui_professorMenu
 class Ui_loginScreen(object):
     #Function to open Admin window
     def openAdminWindow(self):
@@ -26,7 +26,12 @@ class Ui_loginScreen(object):
         self.ui.setupUi(self.window)
         self.window.show()
         loginScreen.setVisible(False)
-
+    def openProfessorWindow(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_professorMenu()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        loginScreen.setVisible(False)
     #Function to exit the application
     def quitApp(self):
         print("quit")
@@ -58,7 +63,9 @@ class Ui_loginScreen(object):
             if (userType == 'admin'):
                 self.openAdminWindow()
             elif(userType == 'student'):
-                self.openStudentWindow(usernameValue)      
+                self.openStudentWindow(usernameValue)    
+            elif (userType == 'professor'):
+                self.openProfessorWindow()
 
         else:
             #Function if the login fail
