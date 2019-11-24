@@ -49,3 +49,14 @@ class grade:
     #function to return the value of the variable grade as string
     def value(self):
         return str(self.grade)
+
+class exam:
+    def __init__(self, class, exam, questionNum, question, answerA, answerB, answerC, answerD):
+        self.class = class
+        self.exam = exam
+        self.questionNum = questionNum
+        self.question = question
+        self.answerA = answerA
+        self.answerB = answerB
+        self.answerC = answerC
+        self.answerD = answerD
