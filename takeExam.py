@@ -7,6 +7,12 @@ import sys
 
 class Ui_includeExam(object):
 
+    def nextQuestion(self):
+        print(self.questBox.currentIndex())
+        self.questBox.setCurrentIndex(self.questBox.currentIndex() + 1)
+        self.readQuestion()
+
+
     def readQuestion(self):
         #This function reads the selected question from the database and fill up the corresponding fields.
         classNum = self.courseDropbox.currentText()
@@ -16,23 +22,31 @@ class Ui_includeExam(object):
         if ( (classNum=="") or (exam=="") or (questionNum=="") ):
             return win32api.MessageBox(0, 'Please select a class, exam, or title.', 'Missing Information')
 
+        #set the question number according to the question selected.
+        if questionNum == "Question1": qnum = 0
+        if questionNum == "Question2": qnum = 1
+        if questionNum == "Question3": qnum = 2
+        if questionNum == "Question4": qnum = 3
+        if questionNum == "Question5": qnum = 4
+
         try:
             conn = sqlite3.connect('lms-system.db')
             c = conn.cursor()
-            c.execute("SELECT * FROM exams WHERE classNum=? AND exam=? AND questionNum=?", (classNum,exam,questionNum))
-            a = c.fetchone()
+            c.execute("SELECT * FROM exams WHERE classNum=? AND exam=?", (classNum,exam))
+            a = c.fetchall()
             conn.commit()
             conn.close()
             print(a)
             #print(a[0],"-", a[1],"-", a[2],"-", a[3],"-", a[4],"-", a[5],"-", a[6],"-", a[7],"-", "Test")
-            examquestion = examsTest(str(a[0]), str(a[1]), str(a[2]), str(a[3]), str(a[4]), str(a[5]), str(a[6]), str(a[7]), str(a[8]))
+            examquestion = []
+            for i in range(len(a)):
+                examquestion.append(examsTest(str(a[i][0]), str(a[i][1]), str(a[i][2]), str(a[i][3]), str(a[i][4]), str(a[i][5]), str(a[i][6]), str(a[i][7]), str(a[i][8])))
             print(examquestion)
-            self.questionTextbox.setText(str(examquestion.question))
-            self.answerA.setText(str(examquestion.answerA))
-            self.answerB.setText(str(examquestion.answerB))
-            self.answerC.setText(str(examquestion.answerC))
-            self.answerD.setText(str(examquestion.answerD))
-            self.correctanswerTextbox.setText(str(examquestion.correctAnswer))
+            self.questionTextbox.setText(str(examquestion[qnum].question))
+            self.answerA.setText(str(examquestion[qnum].answerA))
+            self.answerB.setText(str(examquestion[qnum].answerB))
+            self.answerC.setText(str(examquestion[qnum].answerC))
+            self.answerD.setText(str(examquestion[qnum].answerD))
             print("done reading")
         except:
             #print(sys.exc_info())
@@ -111,6 +125,10 @@ class Ui_includeExam(object):
         self.nextButton = QtWidgets.QPushButton(includeExam)
         self.nextButton.setGeometry(QtCore.QRect(190, 280, 80, 22))
         self.nextButton.setObjectName("nextButton")
+        if self.questBox.currentIndex() == 5:
+            self.nextButton.setEnabled(False)
+        else:
+            self.nextButton.setEnabled(True)
         self.radioA = QtWidgets.QRadioButton(includeExam)
         self.radioA.setGeometry(QtCore.QRect(250, 160, 99, 22))
         self.radioA.setText("")
@@ -136,8 +154,8 @@ class Ui_includeExam(object):
 
         self.retranslateUi(includeExam)
         self.previousButton.clicked.connect(self.previousButton.close)
-        self.openButton.clicked.connect(self.openButton.close)
-        self.nextButton.clicked.connect(self.nextButton.close)
+        self.openButton.clicked.connect(self.readQuestion)
+        self.nextButton.clicked.connect(self.nextQuestion)
         self.quitButton.clicked.connect(includeExam.close)
         QtCore.QMetaObject.connectSlotsByName(includeExam)
 
