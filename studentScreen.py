@@ -44,6 +44,8 @@ class Ui_Student(object):
     def setupUi(self, Student):
         Student.setObjectName("Student")
         Student.resize(622, 710)
+        Student.setMinimumSize(QtCore.QSize(622, 710))
+        Student.setMaximumSize(QtCore.QSize(622, 710))
         self.centralwidget = QtWidgets.QWidget(Student)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
