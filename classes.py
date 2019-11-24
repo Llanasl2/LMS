@@ -61,3 +61,16 @@ class examsTest:
         self.answerC = answerC
         self.answerD = answerD
         self.correctAnswer = correctAnswer
+
+
+class answeredExam:
+    def __init__(self, classNum, exam, student, q1Answer, q2Answer, q3Answer, q4Answer, q5Answer, totalCorrect):
+        self.classNum = classNum
+        self.exam = exam
+        self.student = student
+        self.q1Answer = q1Answer
+        self.q2Answer = q2Answer
+        self.q3Answer = q3Answer
+        self.q4Answer = q4Answer
+        self.q5Answer = q5Answer
+        self.totalCorrect = totalCorrect

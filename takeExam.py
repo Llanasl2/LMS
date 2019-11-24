@@ -9,7 +9,24 @@ class Ui_includeExam(object):
 
     def nextQuestion(self):
         print(self.questBox.currentIndex())
+        self.nextButton.setEnabled(True)
+        self.previousButton.setEnabled(True)
+        if self.questBox.currentIndex() == 4:
+            self.nextButton.setEnabled(False)
+        else:
+            self.nextButton.setEnabled(True)
         self.questBox.setCurrentIndex(self.questBox.currentIndex() + 1)
+        self.readQuestion()
+
+    def previousQuestion(self):
+        print(self.questBox.currentIndex())
+        self.nextButton.setEnabled(True)
+        self.previousButton.setEnabled(True)
+        if self.questBox.currentIndex() == 2:
+            self.previousButton.setEnabled(False)
+        else:
+            self.previousButton.setEnabled(True)
+        self.questBox.setCurrentIndex(self.questBox.currentIndex() - 1)
         self.readQuestion()
 
 
@@ -125,10 +142,7 @@ class Ui_includeExam(object):
         self.nextButton = QtWidgets.QPushButton(includeExam)
         self.nextButton.setGeometry(QtCore.QRect(190, 280, 80, 22))
         self.nextButton.setObjectName("nextButton")
-        if self.questBox.currentIndex() == 5:
-            self.nextButton.setEnabled(False)
-        else:
-            self.nextButton.setEnabled(True)
+        self.nextButton.setEnabled(True)
         self.radioA = QtWidgets.QRadioButton(includeExam)
         self.radioA.setGeometry(QtCore.QRect(250, 160, 99, 22))
         self.radioA.setText("")
@@ -153,7 +167,7 @@ class Ui_includeExam(object):
         self.buttonGroup.addButton(self.radioD)
 
         self.retranslateUi(includeExam)
-        self.previousButton.clicked.connect(self.previousButton.close)
+        self.previousButton.clicked.connect(self.previousQuestion)
         self.openButton.clicked.connect(self.readQuestion)
         self.nextButton.clicked.connect(self.nextQuestion)
         self.quitButton.clicked.connect(includeExam.close)
