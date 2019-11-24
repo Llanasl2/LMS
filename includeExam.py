@@ -20,14 +20,15 @@ class Ui_includeExam(object):
         answerB = self.answerB.text()
         answerC = self.answerC.text()
         answerD = self.answerD.text()
+        correctAnswer = self.correctanswerTextbox.text()
 
-        print(classNum, exam, questionNum, question, answerA, answerB, answerC, answerD)
+        print(classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, correctAnswer)
 
         if ( (classNum=="") or (exam=="") or (questionNum=="") ):
             win32api.MessageBox(0, 'Please select a class, exam, or title.', 'Missing Information')
         else:
             try:
-                c.execute("INSERT INTO exams (classNum, exam, questionNum, question, answerA, answerB, answerC, answerD) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (classNum, exam, questionNum, question, answerA, answerB, answerC, answerD))
+                c.execute("INSERT INTO exams (classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, correctAnswer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, correctAnswer))
 
             except:
                 return win32api.MessageBox(0, 'This Question already exists. Choose update to change', 'Question Exists')
@@ -52,18 +53,19 @@ class Ui_includeExam(object):
             conn.commit()
             conn.close()
             print(a)
-            print(a[0],"-", a[1],"-", a[2],"-", a[3],"-", a[4],"-", a[5],"-", a[6],"-", a[7],"-", "Test")
-            examquestion = examsTest(str(a[0]), str(a[1]), str(a[2]), str(a[3]), str(a[4]), str(a[5]), str(a[6]), str(a[7]))
+            #print(a[0],"-", a[1],"-", a[2],"-", a[3],"-", a[4],"-", a[5],"-", a[6],"-", a[7],"-", "Test")
+            examquestion = examsTest(str(a[0]), str(a[1]), str(a[2]), str(a[3]), str(a[4]), str(a[5]), str(a[6]), str(a[7]), str(a[8]))
             print(examquestion)
             self.questionTextbox.setText(str(examquestion.question))
             self.answerA.setText(str(examquestion.answerA))
             self.answerB.setText(str(examquestion.answerB))
             self.answerC.setText(str(examquestion.answerC))
             self.answerD.setText(str(examquestion.answerD))
-            print("done")
+            self.correctanswerTextbox.setText(str(examquestion.correctAnswer))
+            print("done reading")
         except:
             #print(sys.exc_info())
-            return win32api.MessageBox(0, 'This Question do not exist__.', 'Question do not Exist')
+            return win32api.MessageBox(0, 'This Question do not exist.', 'Question do not Exist')
 
 
     def updateQuestion(self):
@@ -76,21 +78,28 @@ class Ui_includeExam(object):
         answerB = self.answerB.text()
         answerC = self.answerC.text()
         answerD = self.answerD.text()
+        correctAnswer = self.correctanswerTextbox.text()
+
+        print(classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, correctAnswer, "-update")
 
         if (question=="" or answerA=="" or answerb=="" or answerC=="" or answerD==""):
             return win32api.MessageBox(0, 'Please type a complete question', 'Missing Information')
 
-        conn = sqlite3.connect('lms-system.db')
-        c = conn.cursor()
-        print(classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, "-update")
+        print(classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, correctAnswer, "-updateAf")
+
         try:
-            c.execute("UPDATE exams SET question=?, answerA=?, answerB=?, answerC=?, answerD=? WHERE classNum=? AND exam=? AND questionNum=?", (question, answerA, answerB, answerC, answerD, classNum, exam, questionNum))
+            Print("trying")
+            conn = sqlite3.connect('lms-system.db')
+            c = conn.cursor()
+            c.execute("UPDATE exams SET question=?, answerA=?, answerB=?, answerC=?, answerD=?, correctAnswer=? WHERE classNum=? AND exam=? AND questionNum=?", (question, answerA, answerB, answerC, answerD, correctAnswer, classNum, exam, questionNum))
+            conn.commit()
+            conn.close()
+            print("Done Saving")
         except:
             print(sys.exc_info())
             return win32api.MessageBox(0, 'We could not save it!', 'Question do not Exist')
 
-        conn.commit()
-        conn.close()
+
 
     def newQuestion(self):
         self.questBox.setCurrentIndex(0)
@@ -99,6 +108,7 @@ class Ui_includeExam(object):
         self.answerB.setText("")
         self.answerC.setText("")
         self.answerD.setText("")
+        self.correctanswerTextbox.setText("")
 
     def setupUi(self, includeExam):
         includeExam.setObjectName("includeExam")
@@ -172,6 +182,7 @@ class Ui_includeExam(object):
         self.correctanswerTextbox.setGeometry(QtCore.QRect(100, 310, 60, 22))
         self.correctanswerTextbox.setObjectName("correctanswerTextbox")
         self.correctanswerTextbox.setPlaceholderText("Answer")
+        self.correctanswerTextbox.setMaxLength(1)
         self.newButton = QtWidgets.QPushButton(includeExam)
         self.newButton.setGeometry(QtCore.QRect(10, 310, 80, 22))
         self.newButton.setObjectName("newButton")

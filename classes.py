@@ -51,7 +51,7 @@ class grade:
         return str(self.grade)
 
 class examsTest:
-    def __init__(self, classNum, exam, questionNum, question, answerA, answerB, answerC, answerD):
+    def __init__(self, classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, correctAnswer):
         self.classNum = classNum
         self.exam = exam
         self.questionNum = questionNum
@@ -60,3 +60,4 @@ class examsTest:
         self.answerB = answerB
         self.answerC = answerC
         self.answerD = answerD
+        self.correctAnswer = correctAnswer
