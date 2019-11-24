@@ -7,6 +7,9 @@ from classes import *
 import sqlite3
 conn = sqlite3.connect('lms-system.db')
 c = conn.cursor()
+
+#c.execute('''CREATE TABLE exam (classNum, exam, questionNum, question, answerA, answerB, answerC, answerD)''')
+
 #c.execute('''CREATE TABLE users (user PRIMARY KEY, password, type)''')
 #c.execute("INSERT INTO users VALUES ('rafael','1234','student')")
 
@@ -26,15 +29,9 @@ c.execute("SELECT * FROM studentGrades")
 #c.execute("INSERT INTO users VALUES ('admin','admin','admin')")
 
 #a = c.fetchone()
-b = c.fetchall()
+#b = c.fetchall()
 conn.commit()
 conn.close()
 
 
-
-
-
-
-
-        
-        
+#classNum, exam, questionNum, question, answerA, answerB, answerC, answerD)
