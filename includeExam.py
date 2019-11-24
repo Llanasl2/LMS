@@ -82,13 +82,13 @@ class Ui_includeExam(object):
 
         print(classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, correctAnswer, "-update")
 
-        if (question=="" or answerA=="" or answerb=="" or answerC=="" or answerD==""):
+        if (question=="" or answerA=="" or answerB=="" or answerC=="" or answerD==""):
             return win32api.MessageBox(0, 'Please type a complete question', 'Missing Information')
 
         print(classNum, exam, questionNum, question, answerA, answerB, answerC, answerD, correctAnswer, "-updateAf")
 
         try:
-            Print("trying")
+            print("trying")
             conn = sqlite3.connect('lms-system.db')
             c = conn.cursor()
             c.execute("UPDATE exams SET question=?, answerA=?, answerB=?, answerC=?, answerD=?, correctAnswer=? WHERE classNum=? AND exam=? AND questionNum=?", (question, answerA, answerB, answerC, answerD, correctAnswer, classNum, exam, questionNum))
@@ -98,7 +98,6 @@ class Ui_includeExam(object):
         except:
             print(sys.exc_info())
             return win32api.MessageBox(0, 'We could not save it!', 'Question do not Exist')
-
 
 
     def newQuestion(self):
