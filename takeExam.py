@@ -73,6 +73,12 @@ class Ui_includeExam(object):
             self.nextButton.setEnabled(True)
         self.questBox.setCurrentIndex(self.questBox.currentIndex() + 1)
         self.readQuestion()
+        self.buttonGroup.setExclusive(False)
+        self.radioA.setChecked(False)
+        self.radioB.setChecked(False)
+        self.radioC.setChecked(False)
+        self.radioD.setChecked(False)
+        self.buttonGroup.setExclusive(True)
 
     #button previous question. It will disable when cannot go further
     def previousQuestion(self):
@@ -85,7 +91,12 @@ class Ui_includeExam(object):
             self.previousButton.setEnabled(True)
         self.questBox.setCurrentIndex(self.questBox.currentIndex() - 1)
         self.readQuestion()
-
+        self.buttonGroup.setExclusive(False)
+        self.radioA.setChecked(False)
+        self.radioB.setChecked(False)
+        self.radioC.setChecked(False)
+        self.radioD.setChecked(False)
+        self.buttonGroup.setExclusive(True)
 
     def readQuestion(self):
         #This function reads the selected question from the database and fill up the corresponding fields.
