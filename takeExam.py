@@ -7,6 +7,62 @@ import sys
 
 class Ui_includeExam(object):
 
+    global answeredQuestions
+    answeredQuestions = answeredExam("0", "0", "0", "0", "0", "0", "0", "0", "0")
+
+    #NEEDS TO UPDATE THE VARIABLE TO GET THE STUDENT FROM THE LOGIN PAGE
+    global student
+    student = "StudentName"
+    def setAnswerQuestion(self):
+
+        classNum = self.courseDropbox.currentText()
+        exam = self.examDropbox.currentText()
+        questionSelected = self.questBox.currentText()
+
+        answeredQuestions.classNum = classNum
+        answeredQuestions.exam = exam
+        answeredQuestions.student = student
+        if self.radioA.isChecked():
+            answer = "a"
+        if self.radioB.isChecked():
+            answer = "b"
+        if self.radioC.isChecked():
+            answer = "c"
+        if self.radioD.isChecked():
+            answer = "d"
+
+        if questionSelected == "Question1":
+            answeredQuestions.q1Answer = answer
+        if questionSelected == "Question2":
+            answeredQuestions.q2Answer = answer
+        if questionSelected == "Question3":
+            answeredQuestions.q3Answer = answer
+        if questionSelected == "Question4":
+            answeredQuestions.q4Answer = answer
+        if questionSelected == "Question5":
+            answeredQuestions.q5Answer = answer
+
+
+        try:
+            conn = sqlite3.connect('lms-system.db')
+            c = conn.cursor()
+            c.execute("UPDATE answeredExam SET Question1=?, Question2=?, Question3=?, Question4=?, Question5=? WHERE classNum=? AND exam=? AND student=?", (answeredQuestions.q1Answer, answeredQuestions.q2Answer, answeredQuestions.q3Answer, answeredQuestions.q4Answer, answeredQuestions.q5Answer, classNum, exam, student))
+            conn.commit()
+            conn.close()
+        except:
+            print(sys.exc_info())
+
+
+    def quitExam(self):
+        #(self, classNum, exam, student, q1Answer, q2Answer, q3Answer, q4Answer, q5Answer, totalCorrect)
+        conn = sqlite3.connect('lms-system.db')
+        c = conn.cursor()
+        c.execute("INSERT * FROM exams WHERE classNum=? AND exam=?", (classNum,exam))
+        a = c.fetchall()
+        conn.commit()
+        conn.close()
+
+    #button next question. It will disable when cannot go further
     def nextQuestion(self):
         print(self.questBox.currentIndex())
         self.nextButton.setEnabled(True)
@@ -18,6 +74,7 @@ class Ui_includeExam(object):
         self.questBox.setCurrentIndex(self.questBox.currentIndex() + 1)
         self.readQuestion()
 
+    #button previous question. It will disable when cannot go further
     def previousQuestion(self):
         print(self.questBox.currentIndex())
         self.nextButton.setEnabled(True)
@@ -35,6 +92,17 @@ class Ui_includeExam(object):
         classNum = self.courseDropbox.currentText()
         exam = self.examDropbox.currentText()
         questionNum = self.questBox.currentText()
+
+        #classNum, exam, student, q1Answer, q2Answer, q3Answer, q4Answer, q5Answer, totalCorrect)
+
+        try:
+            conn = sqlite3.connect('lms-system.db')
+            c = conn.cursor()
+            c.execute("INSERT INTO answeredExam (classNum, exam, student) VALUES (?,?,?)", (classNum, exam, student))
+            conn.commit()
+            conn.close()
+        except:
+            pass
 
         if ( (classNum=="") or (exam=="") or (questionNum=="") ):
             return win32api.MessageBox(0, 'Please select a class, exam, or title.', 'Missing Information')
@@ -68,6 +136,7 @@ class Ui_includeExam(object):
         except:
             #print(sys.exc_info())
             return win32api.MessageBox(0, 'This Question do not exist.', 'Question do not Exist')
+
 
     def setupUi(self, includeExam):
         includeExam.setObjectName("includeExam")
@@ -171,6 +240,10 @@ class Ui_includeExam(object):
         self.openButton.clicked.connect(self.readQuestion)
         self.nextButton.clicked.connect(self.nextQuestion)
         self.quitButton.clicked.connect(includeExam.close)
+        self.radioA.clicked.connect(self.setAnswerQuestion)
+        self.radioB.clicked.connect(self.setAnswerQuestion)
+        self.radioC.clicked.connect(self.setAnswerQuestion)
+        self.radioD.clicked.connect(self.setAnswerQuestion)
         QtCore.QMetaObject.connectSlotsByName(includeExam)
 
     def retranslateUi(self, includeExam):

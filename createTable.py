@@ -9,9 +9,7 @@ conn = sqlite3.connect('lms-system.db')
 c = conn.cursor()
 
 #c.execute('''CREATE TABLE exam (classNum, exam, questionNum, question, answerA, answerB, answerC, answerD)''')
-
-c.execute('''CREATE TABLE answeredExam (classNum, exam, student, q1Answer, q2Answer, q3Answer, q4Answer, q5Answer, totalCorrect)''')
-
+#c.execute('''CREATE TABLE answeredExam (classNum, exam, student, q1Answer, q2Answer, q3Answer, q4Answer, q5Answer, totalCorrect)''')
 #c.execute('''CREATE TABLE users (user PRIMARY KEY, password, type)''')
 #c.execute("INSERT INTO users VALUES ('rafael','1234','student')")
 
