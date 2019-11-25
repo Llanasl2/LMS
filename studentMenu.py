@@ -1,16 +1,30 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'studentMenu.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.2
-#
-# WARNING! All changes made in this file will be lost!
+######################################################
+#    Student Menu Screen
+######################################################
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from studentScreen import Ui_Student
+from takeExam import Ui_includeExam
 
 class Ui_studentMenu(object):
+
+    def openExams(self):
+        self.window = QtWidgets.QWidget()
+        self.ui = Ui_includeExam()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        #I do not know why but this function call breaks the login screen
+        #professorMenu.hide()
+
+    def openGrades(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_Student()
+        self.ui.setupUi(self.window)
+        self.window.show()
+        #This one also breaks the login screen
+        #professorMenu.hide()
+
     def setupUi(self, studentMenu):
         studentMenu.setObjectName("studentMenu")
         studentMenu.resize(137, 128)
@@ -25,8 +39,8 @@ class Ui_studentMenu(object):
         self.professprmenuLabel.setObjectName("professprmenuLabel")
 
         self.retranslateUi(studentMenu)
-        self.studentexamsButton.clicked.connect(studentMenu.close)
-        self.studentgradesButton.clicked.connect(studentMenu.close)
+        self.studentexamsButton.clicked.connect(self.openExams)
+        self.studentgradesButton.clicked.connect(self.openGrades)
         QtCore.QMetaObject.connectSlotsByName(studentMenu)
 
     def retranslateUi(self, studentMenu):

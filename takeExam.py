@@ -7,6 +7,7 @@ import sys
 
 class Ui_includeExam(object):
 
+
     global answeredQuestions
     answeredQuestions = answeredExam("0", "0", "0", "0", "0", "0", "0", "0", "0")
 

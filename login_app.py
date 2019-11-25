@@ -4,9 +4,10 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
-from adminScreen import Ui_Administrator 
+from adminScreen import Ui_Administrator
 from studentScreen import Ui_Student
 from professorMenu import Ui_professorMenu
+from studentMenu import Ui_studentMenu
 
 class Ui_loginScreen(object):
     #Function to open Admin window
@@ -23,10 +24,12 @@ class Ui_loginScreen(object):
         print("Opened")
         Ui_Student.usernameValue = usernameValue
         self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_Student()
+        #self.ui = Ui_Student()
+        self.ui = Ui_studentMenu()
         self.ui.setupUi(self.window)
         self.window.show()
         loginScreen.setVisible(False)
+
     #Function to open Professor Menu
     def openProfessorWindow(self):
         self.window = QtWidgets.QMainWindow()
@@ -55,9 +58,9 @@ class Ui_loginScreen(object):
         if (self.professorCheck.isChecked() == True) and (self.studentCheck.isChecked() == False):
             userType = 'professor'
         if (self.professorCheck.isChecked() == True) and (self.studentCheck.isChecked() == True):
-            userType = 'admin'            
+            userType = 'admin'
         if (self.professorCheck.isChecked() == False) and (self.studentCheck.isChecked() == False):
-            userType = 'admin'            
+            userType = 'admin'
         if (queryValue[0] == self.passwordText.text()) and (queryValue[1] == userType):
             #Function if the login pass
             print("Access granted")
@@ -65,7 +68,7 @@ class Ui_loginScreen(object):
             if (userType == 'admin'):
                 self.openAdminWindow()
             elif(userType == 'student'):
-                self.openStudentWindow(usernameValue)    
+                self.openStudentWindow(usernameValue)
             elif (userType == 'professor'):
                 self.openProfessorWindow()
 
@@ -86,18 +89,18 @@ class Ui_loginScreen(object):
             if (self.professorCheck.isChecked() == True) and (self.studentCheck.isChecked() == False):
                 userType = 'professor'
             if (self.professorCheck.isChecked() == True) and (self.studentCheck.isChecked() == True):
-                userType = 'admin'            
+                userType = 'admin'
             if (self.professorCheck.isChecked() == False) and (self.studentCheck.isChecked() == False):
-                userType = 'admin'   
-          
-            c.execute("INSERT INTO users (user, password, type) values (?, ?, ?)", (usernameValue, passwordValue, userType))      
+                userType = 'admin'
+
+            c.execute("INSERT INTO users (user, password, type) values (?, ?, ?)", (usernameValue, passwordValue, userType))
             conn.commit()
             conn.close()
 
         except:
             print('Error')
 
-    
+
     def setupUi(self, loginScreen):
         loginScreen.setObjectName("loginScreen")
         loginScreen.resize(329, 359)
